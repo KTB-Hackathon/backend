@@ -22,8 +22,11 @@ public class TestService {
 //        RequestMessageDto message = new RequestMessageDto();
 //        message.setContent(str+"의 맛집을 추천해줘.");
 
-        ResponseMessageDto responseMessageDto = webClient.post()
-                .uri("/message")
+        WebClient testClient = WebClient.builder().build();
+        String url = "http://10.178.0.2:7777/message" ;
+
+        ResponseMessageDto responseMessageDto = testClient.post()
+                .uri(url)
                 .bodyValue(requestMessageDto)
                 .retrieve()
                 .bodyToMono(ResponseMessageDto.class)
