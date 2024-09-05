@@ -3,17 +3,19 @@ pipeline {
 
     environment {
         REPO = 'KTB-Hackathon/backend'
-        ECR_REPO = '9905418374604.dkr.ecr.ap-northeast-2.amazonaws.com/ktbhackback'
-        ECR_CREDENTIALS_ID = 'ecr:ap-northeast-2:ecr_credentials_id'
+        DOCKER_HUB_REPO = 'jonum12312/ktbhackback'  // Docker Hub 저장소
+        DOCKER_HUB_CREDENTIALS_ID = 'dockerhub'     // Jenkins에 저장된 Docker Hub 자격 증명
     }
 
     stages {
+        // 1. Git Checkout
         stage('Checkout') {
             steps {
                 git branch: 'main', url: "https://github.com/${REPO}.git"
             }
         }
 
+        // 2. Check JAR File
         stage('Check JAR File') {
             steps {
                 script {
@@ -22,54 +24,50 @@ pipeline {
             }
         }
 
+        // 3. Gradle Build
         stage('Build Gradle') {
-                    steps {
-                        withGradle {
-                            sh './gradlew build'
-                          }
-                    }
+            steps {
+                withGradle {
+                    sh './gradlew build'
                 }
+            }
+        }
 
+        // 4. Docker 이미지 빌드
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build("${ECR_REPO}:latest")
+                    // Docker 이미지 빌드
+                    dockerImage = docker.build("${DOCKER_HUB_REPO}:${BUILD_NUMBER}")
                 }
             }
         }
 
-        stage('Push to ECR') {
+        // 5. Docker Hub에 푸시
+        stage('Push to Docker Hub') {
             steps {
                 script {
-                     // Jenkins에 저장된 AWS 자격 증명 사용
-                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${ECR_CREDENTIALS_ID}"]]) {
-                         sh """
-                         aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${ECR_REPO}
-                         """
-                     }
-
-                    // ECR로 Docker 이미지 푸시
-                    docker.withRegistry("https://${ECR_REPO}") {
-                        dockerImage.push('latest')
+                    // Jenkins에 저장된 Docker Hub 자격 증명 사용
+                    docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_HUB_CREDENTIALS_ID}") {
+                        dockerImage.push('latest')  // 태그를 'latest'로 푸시
+                        dockerImage.push("${BUILD_NUMBER}")  // 빌드 번호로도 태그를 푸시
                     }
                 }
             }
         }
 
+        // 6. Docker Hub에서 로컬 서버로 배포
         stage('Deploy on Local Server') {
             steps {
                 script {
-                    // Jenkins 자격증명을 사용하여 Docker 로그인
-                    docker.withRegistry("https://${ECR_REPO}", "${ECR_CREDENTIALS_ID}") {
-                        //기존에 도커 컨테이너 삭제
-//                         sh "docker rm -f todayfin-fe"
+                    // 로컬 서버에서 기존 컨테이너 제거
+                    sh "docker rm -f ktbhackback || true"
 
-                        // ECR에서 이미지 pull
-                        sh "docker pull ${ECR_REPO}:latest"
+                    // Docker Hub에서 최신 이미지 pull
+                    sh "docker pull ${DOCKER_HUB_REPO}:latest"
 
-                        // 도커 컨테이너 실행
-                        sh "docker run -d --name ktbhackback -p 80:8080 ${ECR_REPO}:latest"
-                    }
+                    // 컨테이너 실행 (로컬 포트 80 -> 컨테이너 8080)
+                    sh "docker run -d --name ktbhackback -p 80:8080 ${DOCKER_HUB_REPO}:latest"
                 }
             }
         }
