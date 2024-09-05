@@ -43,7 +43,7 @@ pipeline {
                 script {
                     // AWS CLI를 통해 ECR 로그인
                     sh """
-                    sudo aws ecr get-login-password --profile myprofile --region ap-northeast-2 | docker login --username AWS --password-stdin ${ECR_REPO}
+                    aws ecr get-login-password --profile myprofile --region ap-northeast-2 | docker login --username AWS --password-stdin ${ECR_REPO}
                     """
 
                     // ECR로 Docker 이미지 푸시
