@@ -1,20 +1,23 @@
 package com.ktb.ktbhackathonbe.service;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.ktb.ktbhackathonbe.dto.RequestMessageDto;
 import com.ktb.ktbhackathonbe.dto.ResponseMessageDto;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 public class TestService {
 
-    public String postTest(){
+    Gson gson = new Gson();
+
+    public String postTest(RequestMessageDto requestMessageDto){
         WebClient webClient = WebClient.builder().build();
         String url = "http://10.178.0.2:7777/message/";
 
-        RequestMessageDto requestMessageDto = new RequestMessageDto();
-        requestMessageDto.setContent("당진 관광지 추천.");
+        String str = requestMessageDto.getContent();
+        requestMessageDto.setContent(str+"이랑 카이스트 주변 관광지 추천해줘.");
 
         ResponseMessageDto responseMessageDto = webClient.post()
                 .uri(url)
@@ -23,6 +26,9 @@ public class TestService {
                 .bodyToMono(ResponseMessageDto.class)
                 .block();
 
-        return responseMessageDto.toString();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("content", responseMessageDto.getContent());
+
+        return gson.toJson(jsonObject);
     }
 }

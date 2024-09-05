@@ -1,12 +1,10 @@
 package com.ktb.ktbhackathonbe.controller;
 
+import com.ktb.ktbhackathonbe.dto.RequestMessageDto;
 import com.ktb.ktbhackathonbe.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/test")
 @Controller
@@ -23,7 +21,7 @@ public class TestController {
 
     @ResponseBody
     @PostMapping("/message")
-    public String testMessage() {
-        return testService.postTest();
+    public String testMessage(@RequestBody RequestMessageDto requestMessageDto) {
+        return testService.postTest(requestMessageDto);
     }
 }
