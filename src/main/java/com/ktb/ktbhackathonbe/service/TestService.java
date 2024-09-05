@@ -18,11 +18,13 @@ public class TestService {
 
     public String postTest(RequestMessageDto requestMessageDto){
         String str = requestMessageDto.getContent();
-        requestMessageDto.setContent(str+"카이스트 주변 관광지 추천해줘.");
+
+        RequestMessageDto message = new RequestMessageDto();
+        message.setContent(str+"의 맛집을 추천해줘.");
 
         ResponseMessageDto responseMessageDto = webClient.post()
                 .uri("/message")
-                .bodyValue(requestMessageDto)
+                .bodyValue(message)
                 .retrieve()
                 .bodyToMono(ResponseMessageDto.class)
                 .block();
