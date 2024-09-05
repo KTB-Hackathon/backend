@@ -29,6 +29,13 @@ public class TestService {
                 .bodyToMono(ResponseMessageDto.class)
                 .block();
 
+        //응답이 없을 경우
+        if (responseMessageDto == null) {
+            JsonObject errorResponse = new JsonObject();
+            errorResponse.addProperty("content", "서버 응답이 없습니다.");
+            return gson.toJson(errorResponse);
+        }
+
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("content", responseMessageDto.getContent());
 
