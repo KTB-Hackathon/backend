@@ -16,10 +16,9 @@ pipeline {
 
         stage('Build Gradle') {
                     steps {
-                        script {
-                            // Gradle 빌드 수행
+                        withGradle {
                             sh './gradlew build'
-                        }
+                          }
                     }
                 }
 
