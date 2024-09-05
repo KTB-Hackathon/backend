@@ -41,10 +41,12 @@ pipeline {
         stage('Push to ECR') {
             steps {
                 script {
-                   // AWS CLI를 사용하여 ECR에 로그인
-                   sh """
-                   aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${ECR_REPO}
-                   """
+                     // Jenkins에 저장된 AWS 자격 증명 사용
+                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${ECR_CREDENTIALS_ID}"]]) {
+                         sh """
+                         aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${ECR_REPO}
+                         """
+                     }
 
                     // ECR로 Docker 이미지 푸시
                     docker.withRegistry("https://${ECR_REPO}") {
