@@ -17,7 +17,7 @@ public class TestService {
         String url = "http://10.178.0.2:7777/message/";
 
         String str = requestMessageDto.getContent();
-        requestMessageDto.setContent(str+"이랑 카이스트 주변 관광지 추천해줘.");
+        requestMessageDto.setContent(str+"스트 주변 관광지 추천해줘.");
 
         ResponseMessageDto responseMessageDto = webClient.post()
                 .uri(url)
