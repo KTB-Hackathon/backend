@@ -38,6 +38,18 @@ pipeline {
             }
         }
 
+        stage('Login to ECR') {
+                    steps {
+                        script {
+                            // ECR 로그인 명령어 실행
+                            def loginCommand = "aws ecr get-login-password --region your-region | docker login --username AWS --password-stdin ${ECR_REPO}"
+                            // 로그인 결과 확인
+                            def result = sh(script: loginCommand, returnStdout: true).trim()
+                            echo "Login result: ${result}"
+                        }
+                    }
+                }
+
         stage('Push to ECR') {
             steps {
                 script {
