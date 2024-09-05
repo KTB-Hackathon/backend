@@ -67,7 +67,7 @@ pipeline {
                     sh "docker pull ${DOCKER_HUB_REPO}:latest"
 
                     // 컨테이너 실행 (로컬 포트 80 -> 컨테이너 8080)
-                    sh "docker run -d --name ktbhackback -p 80:8080 ${DOCKER_HUB_REPO}:latest"
+                    sh "docker run -d --name ktbhackback -p 8888:8080 ${DOCKER_HUB_REPO}:latest"
                 }
             }
         }
