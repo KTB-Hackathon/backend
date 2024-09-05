@@ -12,6 +12,6 @@ public class TestController {
     @ResponseBody
     @GetMapping("")
     public String test() {
-        return "Test";
+        return "This is Test";
     }
 }
