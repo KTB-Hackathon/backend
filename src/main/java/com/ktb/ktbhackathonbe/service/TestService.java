@@ -18,7 +18,7 @@ public class TestService {
 
     public String postTest(RequestMessageDto requestMessageDto){
         String str = requestMessageDto.getContent();
-        requestMessageDto.setContent(str+"이스트 주변 관광지 추천해줘.");
+        requestMessageDto.setContent(str+"카이스트 주변 관광지 추천해줘.");
 
         ResponseMessageDto responseMessageDto = webClient.post()
                 .uri("/message")
