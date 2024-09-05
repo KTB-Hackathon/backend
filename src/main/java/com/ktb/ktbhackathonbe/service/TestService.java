@@ -17,14 +17,14 @@ public class TestService {
     Gson gson = new Gson();
 
     public String postTest(RequestMessageDto requestMessageDto){
-        String str = requestMessageDto.getContent();
-
-        RequestMessageDto message = new RequestMessageDto();
-        message.setContent(str+"의 맛집을 추천해줘.");
+//        String str = requestMessageDto.getContent();
+//
+//        RequestMessageDto message = new RequestMessageDto();
+//        message.setContent(str+"의 맛집을 추천해줘.");
 
         ResponseMessageDto responseMessageDto = webClient.post()
                 .uri("/message")
-                .bodyValue(message)
+                .bodyValue(requestMessageDto)
                 .retrieve()
                 .bodyToMono(ResponseMessageDto.class)
                 .block();
