@@ -14,6 +14,14 @@ pipeline {
             }
         }
 
+        stage('Check JAR File') {
+            steps {
+                script {
+                    sh 'ls -l build/libs/'
+                }
+            }
+        }
+
         stage('Build Gradle') {
                     steps {
                         withGradle {
