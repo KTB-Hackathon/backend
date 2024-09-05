@@ -35,12 +35,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-### properties ###
-src/main/resources/*.properties
-
-
-### gradle ###
-**/gradle*
-settings.gradle
-gradle.*
