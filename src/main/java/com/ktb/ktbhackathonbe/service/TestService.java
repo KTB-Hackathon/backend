@@ -11,14 +11,18 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Service
 public class TestService {
 
-    @Autowired
-    WebClient webClient;
+//    @Autowired
+//    WebClient webClient;
 
     Gson gson = new Gson();
 
     public String postTest(RequestMessageDto requestMessageDto){
+        WebClient client = WebClient.builder()
+                .codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(2 * 1024 * 1024))
+                .baseUrl("http://10.178.0.2:7777")
+                .build();
 
-        ResponseMessageDto responseMessageDto = webClient.post()
+        ResponseMessageDto responseMessageDto = client.post()
                 .uri("/message")
                 .bodyValue(requestMessageDto)
                 .retrieve()
