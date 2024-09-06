@@ -41,7 +41,7 @@ class KtbHackathonBeApplicationTests {
 
     @Test
     void repoTest(){
-        assertEquals("66da7ca0c1109b6120964033",imageRepository.findByName("covy"));
+        assertEquals("66da7ca0c1109b6120964033",imageRepository.findByName("covy").getId().toString());
     }
 
 
