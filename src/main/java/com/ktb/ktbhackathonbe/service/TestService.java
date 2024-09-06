@@ -22,23 +22,23 @@ public class TestService {
                 .baseUrl("http://10.178.0.2:7777")
                 .build();
 
-        ResponseMessageDto responseMessageDto = client.post()
+        String response = client.post()
                 .uri("/message")
                 .bodyValue(requestMessageDto)
                 .retrieve()
-                .bodyToMono(ResponseMessageDto.class)
+                .bodyToMono(String.class)
                 .block();
 
         //응답이 없을 경우
-        if (responseMessageDto == null) {
+        if (response == null) {
             JsonObject errorResponse = new JsonObject();
             errorResponse.addProperty("content", "서버 응답이 없습니다.");
             return gson.toJson(errorResponse);
         }
 
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("content", responseMessageDto.getContent());
+//        JsonObject jsonObject = new JsonObject();
+//        jsonObject.addProperty("content", responseMessageDto.getContent());
 
-        return gson.toJson(jsonObject);
+        return response;
     }
 }
