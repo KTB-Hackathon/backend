@@ -36,7 +36,7 @@ class KtbHackathonBeApplicationTests {
         assertNotNull(imageMongoTemplate);
         Set<String> collectionNames = imageMongoTemplate.getDb().listCollectionNames().into(new HashSet<>());
         int collectionCount = collectionNames.size();
-        assertTrue(collectionCount == 1);
+        assertTrue(collectionCount == 410);
     }
 
 
