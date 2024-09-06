@@ -19,13 +19,15 @@ public class MongoService {
     Gson gson = new Gson();
 
     public String mongoTest(){
-
+        System.out.println("service start");
         Image image = imageRepository.findByName("covy");
 
         JsonObject jsonObject = new JsonObject();
 
         jsonObject.addProperty("id", image.getId().toString());
         jsonObject.addProperty("name", image.getName());
+
+        System.out.println("service stop");
 
         return gson.toJson(jsonObject);
     }
