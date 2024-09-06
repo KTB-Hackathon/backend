@@ -11,8 +11,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Service
 public class TestService {
 
-//    @Autowired
-//    WebClient webClient;
+    @Autowired
+    WebClient webClient;
 
     Gson gson = new Gson();
 
@@ -22,23 +22,25 @@ public class TestService {
                 .baseUrl("http://10.178.0.2:7777")
                 .build();
 
-        String response = client.post()
-                .uri("/message")
-                .bodyValue(requestMessageDto)
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
+        try {
+            String response = client.post()
+                    .uri("/message")
+                    .bodyValue(requestMessageDto)
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
 
-        //응답이 없을 경우
-        if (response == null) {
+            if (response == null) {
+                JsonObject errorResponse = new JsonObject();
+                errorResponse.addProperty("content", "서버 응답이 없습니다.");
+                return gson.toJson(errorResponse);
+            }
+
+            return response;
+        } catch (Exception e) {
             JsonObject errorResponse = new JsonObject();
-            errorResponse.addProperty("content", "서버 응답이 없습니다.");
+            errorResponse.addProperty("content", "요청 처리 중 오류가 발생했습니다: " + e.getMessage());
             return gson.toJson(errorResponse);
         }
-
-//        JsonObject jsonObject = new JsonObject();
-//        jsonObject.addProperty("content", responseMessageDto.getContent());
-
-        return response;
     }
 }
