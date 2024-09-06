@@ -20,7 +20,7 @@ public class MongoService {
 
     public String mongoTest(){
 
-        Image image = imageRepository.findbyName("covy");
+        Image image = imageRepository.findByName("covy");
 
         JsonObject jsonObject = new JsonObject();
 
