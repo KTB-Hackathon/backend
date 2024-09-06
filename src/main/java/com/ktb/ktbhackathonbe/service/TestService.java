@@ -17,10 +17,9 @@ public class TestService {
     Gson gson = new Gson();
 
     public String postTest(RequestMessageDto requestMessageDto){
-        String url = "http://10.178.0.2:7777/message" ;
 
         ResponseMessageDto responseMessageDto = webClient.post()
-                .uri(url)
+                .uri("/message")
                 .bodyValue(requestMessageDto)
                 .retrieve()
                 .bodyToMono(ResponseMessageDto.class)
