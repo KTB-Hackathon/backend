@@ -26,7 +26,7 @@ public class MongoService {
 
         jsonObject.addProperty("id", image.getId().toString());
         jsonObject.addProperty("name", image.getName());
-
+        System.out.println(image.getName());
         System.out.println("service stop");
 
         return gson.toJson(jsonObject);
