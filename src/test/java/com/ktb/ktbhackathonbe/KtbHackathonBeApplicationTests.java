@@ -1,5 +1,7 @@
 package com.ktb.ktbhackathonbe;
 
+import com.ktb.ktbhackathonbe.model.Image;
+import com.ktb.ktbhackathonbe.repository.image.ImageRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,6 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.bson.assertions.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
@@ -20,6 +23,9 @@ class KtbHackathonBeApplicationTests {
     @Autowired
     @Qualifier("ImageMongoTemplate")
     private MongoTemplate imageMongoTemplate;
+
+    @Autowired
+    ImageRepository imageRepository;
 
     @Test
     void contextLoads() {
@@ -31,6 +37,11 @@ class KtbHackathonBeApplicationTests {
         Set<String> collectionNames = imageMongoTemplate.getDb().listCollectionNames().into(new HashSet<>());
         int collectionCount = collectionNames.size();
         assertTrue(collectionCount == 1);
+    }
+
+    @Test
+    void repoTest(){
+        assertEquals("66da7ca0c1109b6120964033",imageRepository.findByName("covy"));
     }
 
 
