@@ -19,19 +19,13 @@ public class MongoService {
     Gson gson = new Gson();
 
     public String mongoTest(){
-        System.out.println("MongoService start");
 
-        ObjectId id = new ObjectId("66da7ca0c1109b6120964033");
-        Optional<Image> result = imageRepository.findById(id);
+        Image image = imageRepository.findbyName("covy");
 
         JsonObject jsonObject = new JsonObject();
-        if (result.isPresent()) {  // Optional이 비어있지 않은지 확인
-            jsonObject.addProperty("name", result.get().getName());
-        } else {
-            jsonObject.addProperty("error", "Image not found");
-        }
 
-        System.out.println("MongoService end");
+        jsonObject.addProperty("id", image.getId().toString());
+        jsonObject.addProperty("name", image.getName());
 
         return gson.toJson(jsonObject);
     }
