@@ -10,5 +10,11 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 public class Image {
     @MongoId
     private ObjectId id;
-    private String name;
+    private String uri;
+    private String road_nm;
+    private String lotno;
+    private String x;
+    private String y;
+    private String area;
+    private String description;
 }
