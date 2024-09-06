@@ -49,7 +49,7 @@ public class MongoConfig {
     }
 
     @Primary
-    @Bean(name = "alphavantageMongoTemplate")
+    @Bean(name = "MongoTemplate")
     public MongoTemplate mongoTemplate(@Qualifier("MongoDBFactory") MongoDatabaseFactory mongoDatabaseFactory) {
         return new MongoTemplate(mongoDatabaseFactory);
     }
