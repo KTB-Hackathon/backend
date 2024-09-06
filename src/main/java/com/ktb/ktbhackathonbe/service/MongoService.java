@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class MongoService {
@@ -19,11 +19,11 @@ public class MongoService {
     Gson gson = new Gson();
 
     public String mongoTest(){
-        Image image = imageRepository.findByArea("포시즌발리");
+        List<Image> list = imageRepository.findByArea("포시즌발리");
 
         JsonObject jsonObject = new JsonObject();
 
-        jsonObject.addProperty("data", image.toString());
+        jsonObject.addProperty("data", list.get(0).toString());
 
         return gson.toJson(jsonObject);
     }
