@@ -1,5 +1,6 @@
 package com.ktb.ktbhackathonbe.config;
 
+import com.ktb.ktbhackathonbe.repository.image.ImageRepository;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
@@ -18,7 +19,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @Configuration
-@EnableMongoRepositories(basePackageClasses = MongoRepository.class, mongoTemplateRef = "MongoTemplate")
+@EnableMongoRepositories(basePackageClasses = ImageRepository.class, mongoTemplateRef = "MongoTemplate")
 @EnableConfigurationProperties
 public class MongoConfig {
 
