@@ -8,9 +8,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class WebClientConfig {
     @Bean
     public WebClient webClient() {
-        return WebClient.builder()
-                .baseUrl("http://10.178.0.2:7777")
-                .defaultHeader("Content-Type", "application/json")
-                .build();
+        return WebClient.builder().build();
     }
 }
