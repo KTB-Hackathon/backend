@@ -14,6 +14,7 @@ public class MongoController {
 
     @GetMapping("/test")
     public String mongoTest() {
+        System.out.println("MongoController");
         return mongoService.mongoTest();
     }
 }

@@ -19,6 +19,8 @@ public class MongoService {
     Gson gson = new Gson();
 
     public String mongoTest(){
+        System.out.println("MongoService start");
+
         ObjectId id = new ObjectId("66da7ca0c1109b6120964033");
         Optional<Image> result = imageRepository.findById(id);
 
@@ -28,6 +30,8 @@ public class MongoService {
         } else {
             jsonObject.addProperty("error", "Image not found");
         }
+
+        System.out.println("MongoService end");
 
         return gson.toJson(jsonObject);
     }
