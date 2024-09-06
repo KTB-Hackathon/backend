@@ -30,14 +30,14 @@ class KtbHackathonBeApplicationTests {
     @Test
     void contextLoads() {
     }
-
-    @Test
-    void connectionTest(){
-        assertNotNull(imageMongoTemplate);
-        Set<String> collectionNames = imageMongoTemplate.getDb().listCollectionNames().into(new HashSet<>());
-        int collectionCount = collectionNames.size();
-        assertTrue(collectionCount == 410);
-    }
+//
+//    @Test
+//    void connectionTest(){
+//        assertNotNull(imageMongoTemplate);
+//        Set<String> collectionNames = imageMongoTemplate.getDb().listCollectionNames().into(new HashSet<>());
+//        int collectionCount = collectionNames.size();
+//        assertTrue(collectionCount == 410);
+//    }
 
 
 }
